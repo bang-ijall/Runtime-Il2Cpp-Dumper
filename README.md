@@ -8,6 +8,8 @@ This repository contains the source code of the il2cpp dumper with runtime metho
 ### Magisk
 - Install Magisk v24 or heigher and enable Zygisk option
 - Install `zygisk-module.zip` in Magisk
+- Add file `il2cpp-dumper.txt` into `/data/local/tmp/` directory
+- Add package name into this file and continue with new line
 - Start the game, `dump.cs` will be generated in the `/data/user/0/<package-name>/files/` directory
 
 ### Internal injection
