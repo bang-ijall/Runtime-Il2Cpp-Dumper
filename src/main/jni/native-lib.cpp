@@ -544,20 +544,20 @@ void init(std::string path) {
     il2cpp_dump(path);
 }
 
-const char* getFilesDirPath(JavaVM *jvm) {
+const char* getExternalFilesDirPath(JavaVM *jvm) {
     if (jvm != nullptr) {
-        JNIEnv* env = 0;
-        jvm->AttachCurrentThread(&env, 0);
+        JNIEnv* env = nullptr;
+        jvm->AttachCurrentThread(&env, nullptr);
 
-        if (env != 0) {
+        if (env != nullptr) {
             jclass activityThread = env->FindClass("android/app/ActivityThread");
             jmethodID currentActivityThread = env->GetStaticMethodID(activityThread, "currentActivityThread", "()Landroid/app/ActivityThread;");
             jobject activityThreadInstance = env->CallStaticObjectMethod(activityThread, currentActivityThread);
             jmethodID getApplication = env->GetMethodID(activityThread, "getApplication", "()Landroid/app/Application;");
             jobject appContext = env->CallObjectMethod(activityThreadInstance, getApplication);
             jclass contextClass = env->FindClass("android/content/Context");
-            jmethodID getFilesDir = env->GetMethodID(contextClass, "getFilesDir", "()Ljava/io/File;");
-            jobject fileObj = env->CallObjectMethod(appContext, getFilesDir);
+            jmethodID getExternalFilesDir = env->GetMethodID(contextClass, "getExternalFilesDir", "(Ljava/lang/String;)Ljava/io/File;");
+            jobject fileObj = env->CallObjectMethod(appContext, getExternalFilesDir, nullptr);
             jclass fileClass = env->FindClass("java/io/File");
             jmethodID getPath = env->GetMethodID(fileClass, "getPath", "()Ljava/lang/String;");
             jstring pathString = (jstring) env->CallObjectMethod(fileObj, getPath);
@@ -570,7 +570,7 @@ const char* getFilesDirPath(JavaVM *jvm) {
 
 JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM *vm, void *) {
-    std::string dir = getFilesDirPath(vm);
+    std::string dir = getExternalFilesDirPath(vm);
     size_t pos = dir.rfind("/");
 
     if (pos != std::string::npos) {
