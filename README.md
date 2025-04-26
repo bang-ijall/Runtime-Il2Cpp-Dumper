@@ -18,11 +18,9 @@ This repository contains the source code of the il2cpp dumper with runtime metho
 - Implement the library in folder `libs` and put this code to launcher activity
 
 ```smali
-// start code
 const-string v0, "JALL"
 invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
-// end code
 ```
 
 - Build to apk file
-- Start the game, `dump.cs` will be generated in the `/data/user/0/<package-name>/files/` directory
+- Start the game, `dump.cs` will be generated in the `/sdcard/Android/<package-name>/files/` directory
